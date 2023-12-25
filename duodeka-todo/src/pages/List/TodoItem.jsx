@@ -1,10 +1,75 @@
-import React, {useContext, useState} from 'react';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { useContext, useState } from 'react';
 import IconButton from '@mui/material/IconButton';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PropTypes from "prop-types";
-import {GlobalState} from "../../context/GlobalState.jsx";
+import { GlobalState } from "../../context/GlobalState.jsx";
+import { TextField } from "@mui/material";
+import TodoStatus from "./TodoStatus.jsx";
+import TodoMenu from "./TodoMenu.jsx";
+
+const TodoItem = ({ todo }) => {
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { deleteTodo, checkTodo, editTodo } = useContext(GlobalState);
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedName, setEditedName] = useState(todo.name);
+
+    const handleEdit = () => {
+        setEditedName(todo.name);
+        setIsEditing(true);
+    };
+
+    const handleEditChange = e => setEditedName(e.target.value);
+
+    const handleEditSubmit = () => {
+        editTodo(todo.id, editedName);
+        setIsEditing(false);
+    };
+
+    const handleClick = event => setAnchorEl(event.currentTarget);
+
+    const handleComplete = () => {
+        checkTodo(todo.id);
+        handleClose();
+    };
+
+    const handleDelete = () => {
+        deleteTodo(todo.id);
+        handleClose();
+    };
+
+    const handleClose = () => setAnchorEl(null);
+
+    return (
+        <div className="flex flex-row border justify-between p-4 rounded-md">
+            <div className="flex flex-col">
+                {isEditing ? (
+                    <TextField
+                        value={editedName}
+                        onChange={handleEditChange}
+                        onBlur={handleEditSubmit}
+                        onKeyDown={(e) => {
+                            if (e.key === 'Enter') handleEditSubmit();
+                        }}
+                        variant="standard"
+                    />
+                ) : (
+                    <div>{todo.name}</div>
+                )}
+                <TodoStatus status={todo.status} />
+            </div>
+            <IconButton onClick={handleClick}>
+                <ArrowDropDownIcon />
+            </IconButton>
+            <TodoMenu
+                handleComplete={handleComplete}
+                handleClose={handleClose}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+                anchorEl={anchorEl}
+            />
+        </div>
+    );
+};
 
 TodoItem.propTypes = {
     todo: PropTypes.shape({
@@ -15,90 +80,4 @@ TodoItem.propTypes = {
     }).isRequired
 };
 
-export default function TodoItem({ todo }) {
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const { deleteTodo, checkTodo } = useContext(GlobalState);
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleComplete = () => {
-        checkTodo(todo.id)
-        console.log(todo)
-        handleClose();
-    }
-
-    const handleEdit = () => {
-        checkTodo(todo.id)
-        handleClose();
-    }
-
-    const handleDelete = () => {
-        deleteTodo(todo.id)
-        handleClose();
-    }
-
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
-    const getColorForStatus = (status) => {
-        switch (status) {
-            case 'complete':
-                return 'green';
-            case 'waiting':
-                return 'cornflowerblue';
-            case 'edited':
-                return 'purple';
-            default:
-                return 'black';
-        }
-    };
-
-
-    return (
-        <div className="flex flex-row border justify-between p-4 rounded-md">
-            <div className="flex flex-col">
-                <div>
-                    {todo.name}
-                </div>
-                <div style={{ color: getColorForStatus(todo.status) }}>
-                    {todo.status}
-                </div>
-            </div>
-            <IconButton onClick={handleClick}>
-                <ArrowDropDownIcon />
-            </IconButton>
-            <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-                MenuListProps={{
-                    sx: { padding: 0 }
-                }}
-                sx={{
-                    margin: 0,
-                    borderRadius: '1px',
-                    '& .MuiMenu-list': {
-                        padding: 0,
-                    }
-                }}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
-                }}
-            >
-                <MenuItem onClick={handleComplete} >Complete</MenuItem>
-                <MenuItem onClick={handleEdit}>Edit</MenuItem>
-                <MenuItem onClick={handleDelete}>Delete</MenuItem>
-            </Menu>
-
-        </div>
-    );
-}
+export default TodoItem;

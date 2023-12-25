@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.1",
     "autoprefixer": "^10.4.16",
     "date-fns": "^3.0.6",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.32",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

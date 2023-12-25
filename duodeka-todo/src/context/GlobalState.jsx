@@ -7,6 +7,7 @@ export const GlobalState = createContext({
     addTodo: () => {},
     checkTodo: () => {},
     deleteTodo: () => {},
+    editTodo: () => {}
 });
 
 export const GlobalStateProvider = ({ children }) => {
@@ -34,7 +35,7 @@ export const GlobalStateProvider = ({ children }) => {
     };
 
     return (
-        <GlobalState.Provider value={{todos, addTodo, checkTodo, deleteTodo}}>
+        <GlobalState.Provider value={{todos, addTodo, checkTodo, deleteTodo, editTodo}}>
             {children}
         </GlobalState.Provider>
     );
