@@ -1,24 +1,20 @@
-export default function TodoList(){
-    return(
-        <div className="w-[500px] flex flex-col m-5">
-            <div className="p-3 border">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi dicta dolore esse odit pariatur possimus quas qui repudiandae sapiente?
-            </div>
-            <div className="p-3 border">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi dicta dolore esse odit pariatur possimus quas qui repudiandae sapiente?
-            </div>
-            <div className="p-3 border">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi dicta dolore esse odit pariatur possimus quas qui repudiandae sapiente?
-            </div>
-            <div className="p-3 border">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi dicta dolore esse odit pariatur possimus quas qui repudiandae sapiente?
-            </div>
-            <div className="p-3 border">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi dicta dolore esse odit pariatur possimus quas qui repudiandae sapiente?
-            </div>
-            <div className="p-3 border">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores commodi dicta dolore esse odit pariatur possimus quas qui repudiandae sapiente?
-            </div>
+import React from 'react';
+import { format, addDays } from 'date-fns';
+import DayItem from './DayItem';
+
+export default function TodoList() {
+    const today = new Date();
+
+    return (
+        <div className="container-lg flex flex-row overflow-x-auto mt-[5%]">
+            {[...Array(7)].map((_, i) => {
+                const dayDate = addDays(today, i);
+                return (
+                    <div key={i} className="flex-none w-[30%] p-2 m-2">
+                        <DayItem date={format(dayDate, 'yyyy-MM-dd')} />
+                    </div>
+                );
+            })}
         </div>
-    )
+    );
 }

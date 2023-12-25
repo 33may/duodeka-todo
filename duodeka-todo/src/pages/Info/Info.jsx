@@ -4,7 +4,7 @@ import { Typography, Container, Box } from '@mui/material';
 export default function StateManagementInfo() {
     return (
         <Container maxWidth="md" sx={{ mt: 16, textAlign: 'center' }}>
-            <Typography variant="h4" gutterBottom>Info</Typography>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 300 }}>Info</Typography>
 
             <Box sx={{ my: 4 }}>
                 <Typography variant="h6" gutterBottom sx={{ fontWeight: 300 }}>Context API</Typography>

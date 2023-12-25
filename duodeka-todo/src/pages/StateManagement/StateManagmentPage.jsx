@@ -4,7 +4,7 @@ import { Typography, Container, Box } from '@mui/material';
 export default function StateManagementPage() {
     return (
         <Container maxWidth="md" sx={{ mt: 16, textAlign: 'center' }}>
-            <Typography variant="h4" gutterBottom>State Management in React</Typography>
+            <Typography variant="h4" gutterBottom sx={{ fontWeight: 300 }}>State Management in React</Typography>
 
             <Box sx={{ my: 4 }}>
                 <Typography variant="h6" sx={{ fontWeight: 300 }}>Redux</Typography>
