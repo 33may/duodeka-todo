@@ -41,7 +41,7 @@ const TodoItem = ({ todo }) => {
 
     return (
         <div className="flex flex-row border justify-between p-4 rounded-md">
-            <div className="flex flex-col">
+            <div className="flex flex-col w-[80%]">
                 {isEditing ? (
                     <TextField
                         value={editedName}
